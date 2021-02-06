@@ -2,7 +2,7 @@
 
 uint32_t call_ind = 0;
 
-void chunk_disp(int i, int j)
+void chunk_disp(int32_t i, int32_t j)
 {
 	size_t size =  *chunk_list[i + 1].size; 
 	uint32_t is_used = *chunk_list[i + 1].is_used; 
@@ -22,7 +22,7 @@ void chunk_disp(int i, int j)
 	*chunk_list[i + 1].size = size;
 	*chunk_list[i + 1].is_used = is_used;
 
-	for (int k = i + 2; k < call_ind; ++k)
+	for (int32_t k = i + 2; k < call_ind; ++k)
 	{
 		if (!chunk_list[k].ptr)
 		{
@@ -32,7 +32,7 @@ void chunk_disp(int i, int j)
 		size = *chunk_list[k].size; 
 		is_used = *chunk_list[k].is_used; 
 
-		int q;
+		int32_t q;
 
 		for (q = k - 1; !chunk_list[q].ptr; --q);
 
@@ -46,7 +46,7 @@ void chunk_disp(int i, int j)
 	}
 }
 
-uint32_t count_last_free_chunks(int i)
+uint32_t count_last_free_chunks(int32_t i)
 {
 	uint32_t last_free_chunks_counter = 0;
 
@@ -82,7 +82,7 @@ void *elim_fragm(void)
 {
 	uint32_t last_free_chunks_counter;
 
-	for (int i = call_ind - 1; i >= 0; --i)
+	for (int32_t i = call_ind - 1; i >= 0; --i)
 	{
 		if (!(*chunk_list[i].is_used))
 		{
@@ -100,7 +100,7 @@ void *elim_fragm(void)
 				chunk_disp(i, -1);
 			}
 
-			for (int j = i - 1; j >= 0; --j)
+			for (int32_t j = i - 1; j >= 0; --j)
 			{
 				if (j == 0 && !(*chunk_list[j].is_used))
 				{

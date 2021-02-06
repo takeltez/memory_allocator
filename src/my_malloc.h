@@ -22,9 +22,9 @@ typedef struct chunk
 
 mem_chunk chunk_list[CHUNK_COUNT];
 
-uint32_t count_last_free_chunks(int i);
+uint32_t count_last_free_chunks(int32_t i);
 
-void chunk_disp(int i, int j);
+void chunk_disp(int32_t i, int32_t j);
 void my_free(void *ptr);
 void chunk_log(void);
 void test(void);

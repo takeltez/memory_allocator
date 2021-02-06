@@ -16,9 +16,9 @@ void test(void)
 	printf("\nChunks states after my_free:\n");
 
 	my_free(second);
-	//my_free(third);
+	my_free(third);
 	my_free(fiveth);
-	//my_free(sixth);
+	my_free(sixth);
 
 	chunk_log();
 
