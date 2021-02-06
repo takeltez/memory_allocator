@@ -1,11 +1,11 @@
 #include "my_malloc.h"
 
-unsigned int call_ind = 0;
+uint32_t call_ind = 0;
 
 void chunk_disp(int i, int j)
 {
 	size_t size =  *chunk_list[i + 1].size; 
-	unsigned int is_used = *chunk_list[i + 1].is_used; 
+	uint32_t is_used = *chunk_list[i + 1].is_used; 
 
 	if (j == -1)
 	{
@@ -17,7 +17,7 @@ void chunk_disp(int i, int j)
 	}
 
 	chunk_list[i + 1].size = (size_t *)chunk_list[i + 1].ptr;
-	chunk_list[i + 1].is_used = (unsigned int *)chunk_list[i + 1].ptr + OFFSET_TO_IS_USED_SEG;
+	chunk_list[i + 1].is_used = (uint32_t *)chunk_list[i + 1].ptr + OFFSET_TO_IS_USED_SEG;
 	
 	*chunk_list[i + 1].size = size;
 	*chunk_list[i + 1].is_used = is_used;
@@ -39,16 +39,16 @@ void chunk_disp(int i, int j)
 		chunk_list[k].ptr = chunk_list[q].ptr + *chunk_list[q].size;
 
 		chunk_list[k].size = (size_t *)chunk_list[k].ptr;
-		chunk_list[k].is_used = (unsigned int *)chunk_list[k].ptr + OFFSET_TO_IS_USED_SEG;
+		chunk_list[k].is_used = (uint32_t *)chunk_list[k].ptr + OFFSET_TO_IS_USED_SEG;
 		
 		*chunk_list[k].size = size;
 		*chunk_list[k].is_used = is_used;
 	}
 }
 
-unsigned int count_last_free_chunks(int i)
+uint32_t count_last_free_chunks(int i)
 {
-	unsigned int last_free_chunks_counter = 0;
+	uint32_t last_free_chunks_counter = 0;
 
 	for (; !(*chunk_list[i].is_used); --i)
 	{	
@@ -63,7 +63,7 @@ unsigned int count_last_free_chunks(int i)
 	return last_free_chunks_counter;
 }
 
-void *set_chunk_start_ptr(unsigned int last_free_chunks_counter)
+void *set_chunk_start_ptr(uint32_t last_free_chunks_counter)
 {
 	void *chunk_start_ptr = heap_start_ptr;
 
@@ -80,7 +80,7 @@ void *set_chunk_start_ptr(unsigned int last_free_chunks_counter)
 
 void *elim_fragm(void)
 {
-	unsigned int last_free_chunks_counter;
+	uint32_t last_free_chunks_counter;
 
 	for (int i = call_ind - 1; i >= 0; --i)
 	{
@@ -152,7 +152,7 @@ void *my_malloc(size_t size)
 
 	chunk_list[call_ind].ptr = chunk_start_ptr;
 	chunk_list[call_ind].size = (size_t *)chunk_start_ptr;
-	chunk_list[call_ind].is_used = (unsigned int *)chunk_start_ptr + OFFSET_TO_IS_USED_SEG;
+	chunk_list[call_ind].is_used = (uint32_t *)chunk_start_ptr + OFFSET_TO_IS_USED_SEG;
 
 	*chunk_list[call_ind].size = size;
 	*chunk_list[call_ind].is_used = 1;

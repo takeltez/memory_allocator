@@ -7,7 +7,7 @@ void test(void)
 	void *third = my_malloc(50);
 	void *fourth = my_malloc(150);
 	void *fiveth = my_malloc(40);
-	int *sixth = (int*)my_malloc(30);
+	void *sixth = my_malloc(30);
 
 	printf("Chunks states before my_free:\n");
 
@@ -16,9 +16,9 @@ void test(void)
 	printf("\nChunks states after my_free:\n");
 
 	my_free(second);
-	my_free(third);
+	//my_free(third);
 	my_free(fiveth);
-	my_free(sixth);
+	//my_free(sixth);
 
 	chunk_log();
 
