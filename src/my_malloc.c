@@ -28,7 +28,18 @@ void *my_malloc(size_t size)
 	}
 	else
 	{
-		chunk_start_ptr = elim_fragm();
+		uint32_t is_free_chunk_avl = 0;
+
+		chunk_start_ptr = free_chunks_cover(&is_free_chunk_avl, size);
+
+		if (is_free_chunk_avl)
+		{
+			is_free_chunk_avl = 0;
+
+			chunk_user_ptr = chunk_start_ptr + OFFSET_TO_USER_SEG;
+
+			return chunk_user_ptr;
+		}
 	}
 
 	chunk_list[call_ind].ptr = chunk_start_ptr;

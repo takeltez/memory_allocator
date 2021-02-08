@@ -8,15 +8,8 @@ void chunk_log(void)
 {
 	for (size_t i = 0; i < call_ind; ++i)
 	{
-		if (chunk_list[i].ptr) 
-		{
-			printf("Chunk %ld: meta segment: [%p], chunk size - %ld, user segment: [%p]\n", 
-					i, chunk_list[i].ptr, *chunk_list[i].size, chunk_list[i].ptr + OFFSET_TO_USER_SEG);
-		}
-		else
-		{
-			printf("Chunk %ld: meta segment: [%p]\n", i, chunk_list[i].ptr);
-		}
+		printf("Chunk %ld: meta segment: [%p], chunk size - %ld, is used - %u, user segment: [%p]\n", 
+				i, chunk_list[i].ptr, *chunk_list[i].size, *chunk_list[i].is_used, chunk_list[i].ptr + OFFSET_TO_USER_SEG);
 	}
 }
 
@@ -42,9 +35,13 @@ void test(void)
 	
 	chunk_log();
 
-	void *seventh = my_malloc(130);
+	second = my_malloc(200);
+	third = my_malloc(50);
+	sixth = my_malloc(30);
 
-	printf("\nChunks states after displacements:\n");
+	void *seventh = my_malloc(40);
+
+	printf("\nChunks states after using free blocks again:\n");
 
 	chunk_log();
 }

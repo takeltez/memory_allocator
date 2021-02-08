@@ -9,11 +9,7 @@ void my_free(void *ptr)
 	{
 		if (chunk_list[i].ptr == ptr - OFFSET_TO_USER_SEG)
 		{
-			*chunk_list[i].size = 0;
 			*chunk_list[i].is_used = 0;
-
-			 chunk_list[i].ptr = NULL;
-			 chunk_list[i].size = NULL;
 
 			 size_t *item = (size_t*)ptr;
 			 

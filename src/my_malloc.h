@@ -23,5 +23,3 @@ typedef struct chunk
 mem_chunk chunk_list[CHUNK_COUNT];
 
 void *my_malloc(size_t size);
-
-
