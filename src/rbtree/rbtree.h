@@ -11,7 +11,7 @@
 typedef struct rbtree
 {
 	mem_chunk *chunk_ptr;
-	int color;
+	uint32_t color;
 	struct rbtree *parent;
 	struct rbtree *left;
 	struct rbtree *right;
