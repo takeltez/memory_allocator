@@ -1,13 +1,19 @@
 #include "my_malloc.h"
 #include "chunk_handler.h"
+#include "rbtree.h"
 
 uint32_t call_ind = 0;
+
+rbtree empty_node = {0, NODE_BLACK, NULL, NULL, NULL };
+rbtree *null_node = &empty_node;
+rbtree *tree = NULL;
 
 void *my_malloc(size_t size)
 {
 	void *chunk_user_ptr;
 	void *chunk_start_ptr;
 
+	static void *last_chunk_ptr;
 	static size_t free_space = HEAP_SIZE;
 
 	assert(size > 0);
@@ -28,17 +34,17 @@ void *my_malloc(size_t size)
 	}
 	else
 	{
-		uint32_t is_free_chunk_avl = 0;
-
-		chunk_start_ptr = free_chunks_cover(&is_free_chunk_avl, size);
-
-		if (is_free_chunk_avl)
+		chunk_start_ptr = free_chunks_cover(size);
+		
+		if (chunk_start_ptr)
 		{
-			is_free_chunk_avl = 0;
-
 			chunk_user_ptr = chunk_start_ptr + OFFSET_TO_USER_SEG;
 
 			return chunk_user_ptr;
+		}
+		else
+		{
+			chunk_start_ptr = last_chunk_ptr;
 		}
 	}
 
@@ -50,8 +56,12 @@ void *my_malloc(size_t size)
 	*chunk_list[call_ind].is_used = 1;
 
 	chunk_user_ptr = chunk_start_ptr + OFFSET_TO_USER_SEG;
+	last_chunk_ptr = chunk_start_ptr + size;
+
+	tree = rbtree_add(tree, chunk_list + call_ind);
 
 	++call_ind;
 
 	return chunk_user_ptr;
 }
+
