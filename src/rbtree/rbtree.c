@@ -14,11 +14,11 @@ rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr)
 		chunk = *new_node->chunk_ptr;
 		parent_node = new_node;
 
-		if (*(*chunk_ptr).size < *chunk.size)
+		if (*chunk_ptr->size < *chunk.size)
 		{
 			new_node = new_node->left;
 		}
-		else if (*(*chunk_ptr).size > *chunk.size)
+		else if (*chunk_ptr->size > *chunk.size)
 		{
 			new_node = new_node->right;
 		}
@@ -46,7 +46,7 @@ rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr)
 	{
 		chunk = *parent_node->chunk_ptr;
 
-		if (*(*chunk_ptr).size < *chunk.size) //То привязываем его к соответствующему предку
+		if (*chunk_ptr->size < *chunk.size) //То привязываем его к соответствующему предку
 		{
 			parent_node->left = new_node;
 		}
