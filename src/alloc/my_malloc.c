@@ -34,7 +34,7 @@ void *my_malloc(size_t size)
 	}
 	else
 	{
-		chunk_start_ptr = free_chunks_cover(size);
+		chunk_start_ptr = free_chunks_reuse(size);
 		
 		if (chunk_start_ptr)
 		{

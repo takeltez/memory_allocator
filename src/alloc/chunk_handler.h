@@ -3,4 +3,4 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-void *free_chunks_cover(size_t size);
+void *free_chunks_reuse(size_t size);

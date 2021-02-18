@@ -4,7 +4,7 @@
 
 extern rbtree *tree;
 
-void *free_chunks_cover(size_t size)
+void *free_chunks_reuse(size_t size)
 {
 	rbtree *found_node = NULL; 
 
