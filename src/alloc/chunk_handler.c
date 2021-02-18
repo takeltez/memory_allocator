@@ -14,6 +14,7 @@ void *free_chunks_cover(size_t size)
 	{
 		mem_chunk free_chunk = *found_node->chunk_ptr;
 
+		*free_chunk.size = size;
 		*free_chunk.is_used = 1;
 
 		return free_chunk.ptr;

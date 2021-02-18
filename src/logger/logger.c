@@ -13,7 +13,7 @@ void rbtree_print(rbtree *root)
 	{
 		chunk = *root->chunk_ptr;
 
-		printf("meta segment: [%p]\nchunk size: %ld\nis used: %u\nuser segment: [%p]\n(nodes are chunk size)\nparent node: %ld\nleft node: %ld\nright node: %ld\n\n", 
+		printf("meta segment: [%p]\nchunk size(node): %ld\nis used: %u\nuser segment: [%p]\nparent node: %ld\nleft node: %ld\nright node: %ld\n\n", 
 													chunk.ptr, *chunk.size, *chunk.is_used, chunk.ptr + OFFSET_TO_USER_SEG, 
 														rbtree_key(root->parent), rbtree_key(root->left), rbtree_key(root->right));
 		
@@ -38,15 +38,18 @@ void test(void)
 	my_free(third);
 	my_free(fiveth);
 	my_free(sixth);
-	
+
 	printf("\nChunks states after my_free:\n\n");
 	rbtree_print(tree);
 
-	second = my_malloc(200);
+	second = my_malloc(48);
 	third = my_malloc(50);
-	sixth = my_malloc(30);
+	sixth = my_malloc(39);
+	fiveth = my_malloc (230);
 
 	void *seventh = my_malloc(40);
+	void *a = my_malloc(27);
+	void *b = my_malloc(9);
 
 	printf("\nChunks states after using free blocks again:\n\n");
 	rbtree_print(tree);

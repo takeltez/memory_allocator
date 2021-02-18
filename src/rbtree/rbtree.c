@@ -78,6 +78,11 @@ rbtree *rbtree_lookup_freed_chunk(rbtree *root, size_t size)
 
 		if (size < *chunk.size)
 		{	
+			if ((size >= *chunk.size - INFELICITY) && (!(*chunk.is_used)))
+			{
+				return root;
+			}
+
 			root = root->left;
 		}
 		else if (size > *chunk.size)

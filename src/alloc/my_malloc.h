@@ -10,6 +10,7 @@
 #define CHUNK_COUNT 40
 #define OFFSET_TO_IS_USED_SEG 4
 #define OFFSET_TO_USER_SEG (8 + OFFSET_TO_IS_USED_SEG)
+#define INFELICITY 5
 
 void *heap_start_ptr;
 
