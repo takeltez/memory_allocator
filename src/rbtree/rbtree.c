@@ -6,24 +6,38 @@ rbtree *null_node;
 rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr)
 {
 	rbtree *new_node = root, *parent_node = null_node;
-	mem_chunk chunk;
 
 	//Находим позицию для вставки нового нода
 	while (new_node != null_node && new_node) //Только если дерево уже существует
 	{
-		chunk = *new_node->chunk_ptr;
+
 		parent_node = new_node;
 
-		if (*chunk_ptr->size < *chunk.size)
+		if (*chunk_ptr->size < new_node->chunk_size)
 		{
+			if (*chunk_ptr->size >= new_node->chunk_size - INFELICITY)
+			{
+				new_node->chunks[new_node->filled_elems_count] = chunk_ptr;
+
+				++new_node->filled_elems_count;
+
+				return root;
+			}
+
 			new_node = new_node->left;
 		}
-		else if (*chunk_ptr->size > *chunk.size)
+
+		else if (*chunk_ptr->size > new_node->chunk_size)
 		{
 			new_node = new_node->right;
 		}
-		else
-		{
+
+		else if (*chunk_ptr->size == new_node->chunk_size)
+		{		
+			new_node->chunks[new_node->filled_elems_count] = chunk_ptr;
+
+			++new_node->filled_elems_count;
+
 			return root;
 		}
 	}
@@ -36,18 +50,18 @@ rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr)
 	}
 
 	//Инициализируем поля нода
-	new_node->chunk_ptr = chunk_ptr;
+	new_node->chunk_size = *chunk_ptr->size;
+	new_node->filled_elems_count = 1;
+	new_node->chunks[0] = chunk_ptr;
 	new_node->color = NODE_RED;
 	new_node->parent = parent_node;
 	new_node->left = null_node;
 	new_node->right = null_node;
 
 	if (parent_node != null_node) //Если был создан не корень
-	{
-		chunk = *parent_node->chunk_ptr;
-
-		if (*chunk_ptr->size < *chunk.size) //То привязываем его к соответствующему предку
-		{
+	{	
+		if (*chunk_ptr->size < parent_node->chunk_size) //То привязываем его к соответствующему предку
+		{	
 			parent_node->left = new_node;
 		}
 		else
@@ -63,10 +77,8 @@ rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr)
 	return rbtree_add_fixup(root, new_node); //Восстанавление свойств
 }
 
-rbtree *rbtree_lookup_freed_chunk(rbtree *root, size_t size)
+mem_chunk *rbtree_lookup_freed_chunk(rbtree *root, size_t size)
 {
-	mem_chunk chunk;
-
 	if (!root || root == null_node)
 	{	
 		return NULL;
@@ -74,34 +86,46 @@ rbtree *rbtree_lookup_freed_chunk(rbtree *root, size_t size)
 
 	while (root && root != null_node)
 	{		
-		chunk = *root->chunk_ptr;
-
-		if (size < *chunk.size)
+		if (size < root->chunk_size)
 		{	
-			if ((size >= *chunk.size - INFELICITY) && (!(*chunk.is_used)))
+			if ((size >= root->chunk_size - INFELICITY))
 			{
-				return root;
+				for (size_t i = 0; i < root->filled_elems_count; ++i)
+				{
+					if (!(*root->chunks[i]->is_used))
+					{
+						return root->chunks[i];
+					}
+				}
 			}
 
 			root = root->left;
 		}
-		else if (size > *chunk.size)
+
+		else if (size > root->chunk_size)
 		{	
 			root = root->right;
 		}
-		else if ((size == *chunk.size) && (!(*chunk.is_used)))
+
+		else if (size == root->chunk_size)
 		{
-			return root;
+			for (size_t i = 0; i < root->filled_elems_count; ++i)
+			{
+				if (!(*root->chunks[i]->is_used))
+				{
+					return root->chunks[i];
+				}
+			}
+
+			return NULL;
 		}
 	}
 
 	return NULL;
 }
 
-rbtree *rbtree_lookup_chunk_for_free(rbtree *root, size_t size, void *ptr)
+mem_chunk *rbtree_lookup_chunk_for_free(rbtree *root, size_t size, void *ptr)
 {
-	mem_chunk chunk;
-
 	if (!root || root == null_node)
 	{
 		return NULL;
@@ -109,19 +133,23 @@ rbtree *rbtree_lookup_chunk_for_free(rbtree *root, size_t size, void *ptr)
 
 	while (root && root != null_node)
 	{
-		chunk = *root->chunk_ptr;
-
-		if (size < *chunk.size)
+		if (size < root->chunk_size)
 		{
 			root = root->left;
 		}
-		else if (size > *chunk.size)
+		else if (size > root->chunk_size)
 		{
 			root = root->right;
 		}
-		else if ((size == *chunk.size) && (chunk.ptr == ptr - OFFSET_TO_USER_SEG))
+		else if (size == root->chunk_size)
 		{
-			return root;
+			for (size_t i = 0; i < root->filled_elems_count; ++i)
+			{
+				if (root->chunks[i]->ptr == ptr - OFFSET_TO_USER_SEG)
+				{
+					return root->chunks[i];
+				}
+			}
 		}
 	}
 
@@ -131,7 +159,7 @@ rbtree *rbtree_lookup_chunk_for_free(rbtree *root, size_t size, void *ptr)
 rbtree *rbtree_add_fixup(rbtree *root, rbtree *curr_node)
 {
 	rbtree *uncle_node;
-	
+			
 	while (curr_node != root && curr_node->parent->color == NODE_RED) //Текущий нод - не корень, предок красный
 	{
 		if (curr_node->parent == curr_node->parent->parent->left) //Если предок слева от деда, то работаем с левым поддеревом
@@ -185,6 +213,7 @@ rbtree *rbtree_add_fixup(rbtree *root, rbtree *curr_node)
 	}
 
 	root->color = NODE_BLACK;
+
 	return root;
 }
 
@@ -276,7 +305,5 @@ size_t rbtree_key(rbtree *node)
 		return -1;
 	}
 
-	mem_chunk chunk = *node->chunk_ptr;
-
-	return *chunk.size;
+	return node->chunk_size;
 }

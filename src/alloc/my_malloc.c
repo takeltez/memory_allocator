@@ -4,7 +4,7 @@
 
 uint32_t call_ind = 0;
 
-rbtree empty_node = {0, NODE_BLACK, NULL, NULL, NULL };
+rbtree empty_node = {0, 0, {NULL}, NODE_BLACK, NULL, NULL, NULL };
 rbtree *null_node = &empty_node;
 rbtree *tree = NULL;
 
@@ -32,6 +32,7 @@ void *my_malloc(size_t size)
 		heap_start_ptr = sbrk(HEAP_SIZE);
 		chunk_start_ptr = heap_start_ptr;
 	}
+	
 	else
 	{
 		chunk_start_ptr = free_chunks_reuse(size);
@@ -42,6 +43,7 @@ void *my_malloc(size_t size)
 
 			return chunk_user_ptr;
 		}
+
 		else
 		{
 			chunk_start_ptr = last_chunk_ptr;
@@ -59,7 +61,7 @@ void *my_malloc(size_t size)
 	last_chunk_ptr = chunk_start_ptr + size;
 
 	tree = rbtree_add(tree, chunk_list + call_ind);
-
+	
 	++call_ind;
 
 	return chunk_user_ptr;

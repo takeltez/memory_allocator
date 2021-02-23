@@ -4,21 +4,33 @@
 
 extern rbtree *tree;
 extern rbtree *null_node;
+extern uint32_t call_ind;
 
 void rbtree_print(rbtree *root)
 {
-	mem_chunk chunk;
-
 	if (root && root != null_node)
-	{
-		chunk = *root->chunk_ptr;
+	{	
+		printf("Key(chunks size): %ld\n", root->chunk_size);
 
-		printf("meta segment: [%p]\nchunk size(node): %ld\nis used: %u\nuser segment: [%p]\nparent node: %ld\nleft node: %ld\nright node: %ld\n\n", 
-													chunk.ptr, *chunk.size, *chunk.is_used, chunk.ptr + OFFSET_TO_USER_SEG, 
-														rbtree_key(root->parent), rbtree_key(root->left), rbtree_key(root->right));
+		for (size_t i = 0; i < root->filled_elems_count; ++i)
+		{
+			printf("Chunk[%ld]: meta segment: [%p], user segment: [%p], size: %ld, is used: %u\n", 
+				i, root->chunks[i]->ptr, root->chunks[i]->ptr + OFFSET_TO_USER_SEG, *root->chunks[i]->size, *root->chunks[i]->is_used);
+		}
+
+		printf("Parent node: %ld\nLeft node: %ld\nRight node: %ld\n\n", 
+				rbtree_key(root->parent), rbtree_key(root->left), rbtree_key(root->right));
 		
 		rbtree_print(root->left);
 		rbtree_print(root->right);
+	}
+}
+
+void chunk_print(void)
+{
+	for (size_t i = 0; i < call_ind; ++i)
+	{
+		printf("Chunk %ld start ptr: [%p]\n", i, chunk_list[i].ptr);
 	}
 }
 
@@ -45,12 +57,14 @@ void test(void)
 	second = my_malloc(48);
 	third = my_malloc(50);
 	sixth = my_malloc(39);
-	fiveth = my_malloc (230);
+	fiveth = my_malloc(230);
 
 	void *seventh = my_malloc(40);
+
 	void *a = my_malloc(27);
 	void *b = my_malloc(9);
+	void *c = my_malloc(27);
 
-	printf("\nChunks states after using free blocks again:\n\n");
+	printf("\nChunks states after using freed blocks again:\n\n");
 	rbtree_print(tree);
 }
