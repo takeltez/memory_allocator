@@ -88,7 +88,7 @@ mem_chunk *rbtree_lookup_freed_chunk(rbtree *root, size_t size)
 	{		
 		if (size < root->chunk_size)
 		{	
-			if ((size >= root->chunk_size - INFELICITY))
+			if (size >= root->chunk_size - INFELICITY)
 			{
 				for (size_t i = 0; i < root->filled_elems_count; ++i)
 				{
@@ -97,9 +97,14 @@ mem_chunk *rbtree_lookup_freed_chunk(rbtree *root, size_t size)
 						return root->chunks[i];
 					}
 				}
+
+				root = root->right;
 			}
 
-			root = root->left;
+			else if (size < root->chunk_size - INFELICITY)
+			{
+				root = root->left;
+			}
 		}
 
 		else if (size > root->chunk_size)
@@ -117,7 +122,7 @@ mem_chunk *rbtree_lookup_freed_chunk(rbtree *root, size_t size)
 				}
 			}
 
-			return NULL;
+			root = root->right;
 		}
 	}
 
