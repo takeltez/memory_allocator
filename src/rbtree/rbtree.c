@@ -10,21 +10,28 @@ rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr)
 	//Находим позицию для вставки нового нода
 	while (new_node != null_node && new_node) //Только если дерево уже существует
 	{
-
 		parent_node = new_node;
 
 		if (*chunk_ptr->size < new_node->chunk_size)
 		{
 			if (*chunk_ptr->size >= new_node->chunk_size - INFELICITY)
 			{
-				new_node->chunks[new_node->filled_elems_count] = chunk_ptr;
+				if (new_node->filled_elems_count < EQ_CHUNKS_COUNT)
+				{
+					new_node->chunks[new_node->filled_elems_count] = chunk_ptr;
 
-				++new_node->filled_elems_count;
+					++new_node->filled_elems_count;
 
-				return root;
+					return root;
+				}
+
+				new_node = new_node->right;
 			}
 
-			new_node = new_node->left;
+			else if (*chunk_ptr->size < new_node->chunk_size - INFELICITY)
+			{
+				new_node = new_node->left;
+			}
 		}
 
 		else if (*chunk_ptr->size > new_node->chunk_size)
@@ -140,12 +147,30 @@ mem_chunk *rbtree_lookup_chunk_for_free(rbtree *root, size_t size, void *ptr)
 	{
 		if (size < root->chunk_size)
 		{
-			root = root->left;
+			if (size >= root->chunk_size - INFELICITY)
+			{
+				for (size_t i = 0; i < root->filled_elems_count; ++i)
+				{
+					if (root->chunks[i]->ptr == ptr - OFFSET_TO_USER_SEG)
+					{
+						return root->chunks[i];
+					}
+				}
+
+				root = root->right;
+			}
+
+			else if (size < root->chunk_size - INFELICITY)
+			{
+				root = root->left;
+			}
 		}
+
 		else if (size > root->chunk_size)
 		{
 			root = root->right;
 		}
+		
 		else if (size == root->chunk_size)
 		{
 			for (size_t i = 0; i < root->filled_elems_count; ++i)
