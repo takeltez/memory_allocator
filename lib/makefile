@@ -1,11 +1,18 @@
-my_malloc := dlib/my_malloc.so
+my_malloc := bin/my_malloc
+dlib := dlib/my_malloc.so
 CC := gcc
 CFLAGS := -Wall
 
-all: $(my_malloc)
+all: $(my_malloc) $(dlib)
 
-$(my_malloc): build/my_malloc.o build/my_free.o build/chunk_handler.o build/logger.o build/rbtree.o
-		$(CC) $(CFLAGS) -shared build/my_malloc.o build/my_free.o build/chunk_handler.o build/logger.o build/rbtree.o -o $(my_malloc)
+$(my_malloc): build/main.o build/my_malloc.o build/my_free.o build/chunk_handler.o build/logger.o build/rbtree.o
+		$(CC) $(CFLAGS) build/main.o build/my_malloc.o build/my_free.o build/chunk_handler.o build/logger.o build/rbtree.o -o $(my_malloc)
+
+$(dlib): build/my_malloc.o build/my_free.o build/chunk_handler.o build/logger.o build/rbtree.o
+		$(CC) $(CFLAGS) -shared build/my_malloc.o build/my_free.o build/chunk_handler.o build/logger.o build/rbtree.o -o $(dlib)
+
+build/main.o: src/main.c src/logger/logger.h
+		$(CC) $(CFLAGS) -c src/main.c -o build/main.o -Isrc/logger -Isrc/rbtree -Isrc/alloc
 
 build/my_malloc.o: src/alloc/my_malloc.c src/alloc/my_malloc.h src/alloc/chunk_handler.h src/rbtree/rbtree.h
 		$(CC) $(CFLAGS) -fPIC -c src/alloc/my_malloc.c -o build/my_malloc.o -Isrc/rbtree -Isrc/alloc
@@ -23,9 +30,11 @@ build/rbtree.o: src/rbtree/rbtree.c src/rbtree/rbtree.h src/alloc/my_malloc.h
 		$(CC) $(CFLAGS) -fPIC -c src/rbtree/rbtree.c -o build/rbtree.o -Isrc/alloc 
 
 dir:
+	@mkdir bin
 	@mkdir dlib
 	@mkdir build
 		
 clean:
+	@rm bin/*
 	@rm dlib/*
 	@rm build/*
