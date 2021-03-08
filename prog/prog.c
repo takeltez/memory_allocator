@@ -8,7 +8,7 @@ int main(int argc, char const **argv)
 	void *(*my_malloc)(size_t size) = dlsym(handle, "my_malloc");
 	void *(*my_free)(void *ptr) = dlsym(handle, "my_free");
 
-	double *a = (double *)(*my_malloc)(10);
+	double *a = (double *)my_malloc(10);
 
 	a[0] = 12.32;
 
