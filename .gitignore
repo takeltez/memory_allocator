@@ -1,3 +1,7 @@
 lib/bin
 lib/build/
 lib/dlib/
+
+prog/
+
+!prog/*.c

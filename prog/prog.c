@@ -3,7 +3,7 @@
 
 int main(int argc, char const **argv)
 {
-	void *handle = dlopen("../lib/dlib/my_malloc.so", RTLD_LAZY);
+	void *handle = dlopen("../lib/dlib/libmalloc.so", RTLD_LAZY);
 
 	void *(*my_malloc)(size_t size) = dlsym(handle, "my_malloc");
 	void *(*my_free)(void *ptr) = dlsym(handle, "my_free");

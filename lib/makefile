@@ -1,5 +1,5 @@
 my_malloc := bin/my_malloc
-dlib := dlib/my_malloc.so
+dlib := dlib/libmalloc.so
 CC := gcc
 CFLAGS := -Wall
 
