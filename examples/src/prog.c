@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <dlfcn.h>
+#include <stdlib.h>
 
 int main(int argc, char const **argv)
 {
@@ -10,7 +11,7 @@ int main(int argc, char const **argv)
 	void *(*count_references)(void *ptr)= dlsym(handle, "count_references");
 	void *(*delete_references)(void *ptr) = dlsym(handle, "delete_references");
 
-	double *a = (double *)my_malloc(10 * sizeof(double));
+	int *a = (int *)my_malloc(10 * sizeof(int));
 
 	count_references(&a);
 
@@ -18,7 +19,7 @@ int main(int argc, char const **argv)
 	{
 		a[i] = 12.32;
 
-		printf("%.2f\n", a[i]);
+		printf("%d\n", a[i]);
 	}
 
 	my_free(a);
@@ -27,7 +28,7 @@ int main(int argc, char const **argv)
 
 	for(size_t i = 0; i < 10; ++i)
 	{	
-		printf("%.2f\n", a[i]);
+		printf("%d\n", a[i]);
 	}
 
 	dlclose(handle);

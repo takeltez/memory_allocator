@@ -18,8 +18,6 @@ void delete_references(void *ptr)
 
 void count_references(void *ptr)
 {
-	static size_t ind = 0;
-
 	for(size_t i = 0; i < REF_COUNT; ++i)
 	{
 		if(references[i] == ptr)
@@ -32,19 +30,25 @@ void count_references(void *ptr)
 		}
 	}
 
-	references[ind] = ptr;
-	ref_vals[ind] = *(size_t *)ptr;
+	for(size_t i = 0; i < REF_COUNT; ++i)
+	{
+		if(references[i] == NULL)
+		{	
+			references[i] = ptr;
+			ref_vals[i] = *(size_t *)ptr;
 
-	++ind;
+			break;
+		}
+	}
 }
 
 void my_free(void *ptr)
 {
-	int *item;
+	size_t *item;
 
 	mem_chunk *chunk_for_free = NULL;
 
-	size_t size = *((size_t *)(ptr - OFFSET_TO_USER_SEG));
+	size_t size = *(size_t *)(ptr - OFFSET_TO_USER_SEG);
 
 	chunk_for_free = rbtree_lookup_chunk_for_free(tree, size, ptr);
 
@@ -52,12 +56,9 @@ void my_free(void *ptr)
 	{
 		*chunk_for_free->is_used = 0;
 
-		for(size_t i = 0; i < size - OFFSET_TO_USER_SEG; ++i)
-		{
-			item = (int *)ptr + i;
+		item = (size_t *)ptr;
 
-			*item = 0;
-		}
+		*item = 0;
 
 		ptr = NULL;
 	}
