@@ -8,11 +8,10 @@
 
 #define HEAP_SIZE 10000
 #define CHUNK_COUNT 40
+#define OFFSET_TO_SIZE_SEG 8
 #define OFFSET_TO_IS_USED_SEG 4
-#define OFFSET_TO_USER_SEG (8 + OFFSET_TO_IS_USED_SEG)
-#define INFELICITY 5
-
-void *heap_start_ptr;
+#define OFFSET_TO_USER_SEG (OFFSET_TO_SIZE_SEG + OFFSET_TO_IS_USED_SEG)
+#define DEVIATION 5
 
 typedef struct chunk
 {

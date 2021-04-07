@@ -29,8 +29,7 @@ void *my_malloc(size_t size)
 
 	if (!call_ind)
 	{
-		heap_start_ptr = sbrk(HEAP_SIZE);
-		chunk_start_ptr = heap_start_ptr;
+		chunk_start_ptr = sbrk(HEAP_SIZE);
 	}
 	
 	else

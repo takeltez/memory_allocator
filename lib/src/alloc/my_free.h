@@ -3,4 +3,11 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
+#define REF_COUNT 20
+
+size_t *references[REF_COUNT];
+size_t *ref_vals[REF_COUNT];
+
+void delete_references(void *ptr);
+void count_references(void *ptr);
 void my_free(void *ptr);

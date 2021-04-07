@@ -14,7 +14,7 @@ rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr)
 
 		if (*chunk_ptr->size < new_node->chunk_size)
 		{
-			if (*chunk_ptr->size >= new_node->chunk_size - INFELICITY)
+			if (*chunk_ptr->size >= new_node->chunk_size - DEVIATION)
 			{
 				if (new_node->filled_elems_count < EQ_CHUNKS_COUNT)
 				{
@@ -28,7 +28,7 @@ rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr)
 				new_node = new_node->right;
 			}
 
-			else if (*chunk_ptr->size < new_node->chunk_size - INFELICITY)
+			else if (*chunk_ptr->size < new_node->chunk_size - DEVIATION)
 			{
 				new_node = new_node->left;
 			}
@@ -95,7 +95,7 @@ mem_chunk *rbtree_lookup_freed_chunk(rbtree *root, size_t size)
 	{		
 		if (size < root->chunk_size)
 		{	
-			if (size >= root->chunk_size - INFELICITY)
+			if (size >= root->chunk_size - DEVIATION)
 			{
 				for (size_t i = 0; i < root->filled_elems_count; ++i)
 				{
@@ -108,7 +108,7 @@ mem_chunk *rbtree_lookup_freed_chunk(rbtree *root, size_t size)
 				root = root->right;
 			}
 
-			else if (size < root->chunk_size - INFELICITY)
+			else if (size < root->chunk_size - DEVIATION)
 			{
 				root = root->left;
 			}
@@ -147,7 +147,7 @@ mem_chunk *rbtree_lookup_chunk_for_free(rbtree *root, size_t size, void *ptr)
 	{
 		if (size < root->chunk_size)
 		{
-			if (size >= root->chunk_size - INFELICITY)
+			if (size >= root->chunk_size - DEVIATION)
 			{
 				for (size_t i = 0; i < root->filled_elems_count; ++i)
 				{
@@ -160,7 +160,7 @@ mem_chunk *rbtree_lookup_chunk_for_free(rbtree *root, size_t size, void *ptr)
 				root = root->right;
 			}
 
-			else if (size < root->chunk_size - INFELICITY)
+			else if (size < root->chunk_size - DEVIATION)
 			{
 				root = root->left;
 			}

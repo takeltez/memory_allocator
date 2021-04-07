@@ -43,7 +43,15 @@ void test(void)
 	void *fiveth = my_malloc(40);
 	void *sixth = my_malloc(30);
 
+	count_references(&first);
+	count_references(&second);
+	count_references(&third);
+	count_references(&fourth);
+	count_references(&fiveth);
+	count_references(&sixth);
+
 	printf("Chunks states before my_free:\n\n");
+	
 	rbtree_print(tree);
 
 	my_free(second);
@@ -51,7 +59,13 @@ void test(void)
 	my_free(fiveth);
 	my_free(sixth);
 
+	delete_references(&second);
+	delete_references(&third);
+	delete_references(&fiveth);
+	delete_references(&sixth);
+
 	printf("\nChunks states after my_free:\n\n");
+	
 	rbtree_print(tree);
 
 	second = my_malloc(48);
@@ -59,12 +73,18 @@ void test(void)
 	sixth = my_malloc(39);
 	fiveth = my_malloc(230);
 
-	void *seventh = my_malloc(40);
+	count_references(&second);
+	count_references(&third);
+	count_references(&sixth);
+	count_references(&fiveth);
 
-	void *a = my_malloc(27);
-	void *b = my_malloc(9);
-	void *c = my_malloc(27);
+	sixth = my_malloc(39);
+	fiveth = my_malloc(230);
+
+	count_references(&sixth);
+	count_references(&fiveth);
 
 	printf("\nChunks states after using freed blocks again:\n\n");
+	
 	rbtree_print(tree);
 }
