@@ -1,32 +1,32 @@
-my_malloc := bin/my_malloc
+cmalloc := bin/cmalloc
 dlib := dlib/libmalloc.so
 CC := gcc
 CFLAGS := -Wall
 
-all: $(my_malloc) $(dlib)
+all: $(cmalloc) $(dlib)
 
-$(my_malloc): build/main.o build/my_malloc.o build/my_free.o build/chunk_handler.o build/logger.o build/rbtree.o
-		$(CC) $(CFLAGS) build/main.o build/my_malloc.o build/my_free.o build/chunk_handler.o build/logger.o build/rbtree.o -o $(my_malloc)
+$(cmalloc): build/main.o build/cmalloc.o build/cfree.o build/chunk_handler.o build/logger.o build/rbtree.o
+		$(CC) $(CFLAGS) build/main.o build/cmalloc.o build/cfree.o build/chunk_handler.o build/logger.o build/rbtree.o -o $(cmalloc)
 
-$(dlib): build/my_malloc.o build/my_free.o build/chunk_handler.o build/logger.o build/rbtree.o
-		$(CC) $(CFLAGS) -shared build/my_malloc.o build/my_free.o build/chunk_handler.o build/logger.o build/rbtree.o -o $(dlib)
+$(dlib): build/cmalloc.o build/cfree.o build/chunk_handler.o build/logger.o build/rbtree.o
+		$(CC) $(CFLAGS) -shared build/cmalloc.o build/cfree.o build/chunk_handler.o build/logger.o build/rbtree.o -o $(dlib)
 
 build/main.o: src/main.c src/logger/logger.h
 		$(CC) $(CFLAGS) -c src/main.c -o build/main.o -Isrc/logger -Isrc/rbtree -Isrc/alloc
 
-build/my_malloc.o: src/alloc/my_malloc.c src/alloc/my_malloc.h src/alloc/chunk_handler.h src/rbtree/rbtree.h
-		$(CC) $(CFLAGS) -fPIC -c src/alloc/my_malloc.c -o build/my_malloc.o -Isrc/rbtree -Isrc/alloc
+build/cmalloc.o: src/alloc/cmalloc.c src/alloc/cmalloc.h src/alloc/chunk_handler.h src/rbtree/rbtree.h
+		$(CC) $(CFLAGS) -fPIC -c src/alloc/cmalloc.c -o build/cmalloc.o -Isrc/rbtree -Isrc/alloc
 
-build/my_free.o: src/alloc/my_free.c src/alloc/my_free.h src/alloc/my_malloc.h src/rbtree/rbtree.h
-		$(CC) $(CFLAGS) -fPIC -c src/alloc/my_free.c -o build/my_free.o -Isrc/rbtree -Isrc/alloc
+build/cfree.o: src/alloc/cfree.c src/alloc/cfree.h src/alloc/cmalloc.h src/rbtree/rbtree.h
+		$(CC) $(CFLAGS) -fPIC -c src/alloc/cfree.c -o build/cfree.o -Isrc/rbtree -Isrc/alloc
 
-build/chunk_handler.o: src/alloc/chunk_handler.c src/alloc/chunk_handler.h src/alloc/my_malloc.h src/rbtree/rbtree.h
+build/chunk_handler.o: src/alloc/chunk_handler.c src/alloc/chunk_handler.h src/alloc/cmalloc.h src/rbtree/rbtree.h
 		$(CC) $(CFLAGS) -fPIC -c src/alloc/chunk_handler.c -o build/chunk_handler.o -Isrc/rbtree -Isrc/alloc
 
-build/logger.o: src/logger/logger.c src/logger/logger.h src/alloc/my_free.h src/alloc/my_malloc.h
+build/logger.o: src/logger/logger.c src/logger/logger.h src/alloc/cfree.h src/alloc/cmalloc.h
 		$(CC) $(CFLAGS) -fPIC -c src/logger/logger.c -o build/logger.o -Isrc/alloc -Isrc/rbtree
 
-build/rbtree.o: src/rbtree/rbtree.c src/rbtree/rbtree.h src/alloc/my_malloc.h
+build/rbtree.o: src/rbtree/rbtree.c src/rbtree/rbtree.h src/alloc/cmalloc.h
 		$(CC) $(CFLAGS) -fPIC -c src/rbtree/rbtree.c -o build/rbtree.o -Isrc/alloc 
 
 dir:

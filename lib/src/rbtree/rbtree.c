@@ -1,5 +1,5 @@
 #include "rbtree.h"
-#include "my_malloc.h"
+#include "cmalloc.h"
 
 rbtree *null_node;
 

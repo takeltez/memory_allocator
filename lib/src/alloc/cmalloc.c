@@ -1,4 +1,4 @@
-#include "my_malloc.h"
+#include "cmalloc.h"
 #include "chunk_handler.h"
 #include "rbtree.h"
 
@@ -8,7 +8,7 @@ rbtree empty_node = {0, 0, {NULL}, NODE_BLACK, NULL, NULL, NULL };
 rbtree *null_node = &empty_node;
 rbtree *tree = NULL;
 
-void *my_malloc(size_t size)
+void *cmalloc(size_t size)
 {
 	void *chunk_user_ptr;
 	void *chunk_start_ptr;

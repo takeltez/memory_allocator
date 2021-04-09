@@ -6,12 +6,12 @@ int main(int argc, char const **argv)
 {
 	void *handle = dlopen("../lib/dlib/libmalloc.so", RTLD_LAZY);
 
-	void *(*my_malloc)(size_t size) = dlsym(handle, "my_malloc");
-	void *(*my_free)(void *ptr) = dlsym(handle, "my_free");
+	void *(*cmalloc)(size_t size) = dlsym(handle, "cmalloc");
+	void *(*cfree)(void *ptr) = dlsym(handle, "cfree");
 	void *(*count_references)(void *ptr)= dlsym(handle, "count_references");
 	void *(*delete_references)(void *ptr) = dlsym(handle, "delete_references");
 
-	int *a = (int *)my_malloc(10 * sizeof(int));
+	int *a = (int *)cmalloc(10 * sizeof(int));
 
 	count_references(&a);
 
@@ -22,7 +22,7 @@ int main(int argc, char const **argv)
 		printf("%d\n", a[i]);
 	}
 
-	my_free(a);
+	cfree(a);
 
 	delete_references(&a);
 

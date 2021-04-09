@@ -1,5 +1,5 @@
 #include "chunk_handler.h"
-#include "my_malloc.h"
+#include "cmalloc.h"
 #include "rbtree.h"
 
 extern rbtree *tree;

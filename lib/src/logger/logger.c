@@ -1,6 +1,6 @@
 #include "logger.h"
-#include "my_free.h"
-#include "my_malloc.h"
+#include "cfree.h"
+#include "cmalloc.h"
 
 extern rbtree *tree;
 extern rbtree *null_node;
@@ -36,12 +36,12 @@ void chunk_print(void)
 
 void test(void)
 {
-	void *first = my_malloc(100);
-	void *second = my_malloc(10);
-	void *third = my_malloc(50);
-	void *fourth = my_malloc(150);
-	void *fiveth = my_malloc(40);
-	void *sixth = my_malloc(30);
+	void *first = cmalloc(100);
+	void *second = cmalloc(10);
+	void *third = cmalloc(50);
+	void *fourth = cmalloc(150);
+	void *fiveth = cmalloc(40);
+	void *sixth = cmalloc(30);
 
 	count_references(&first);
 	count_references(&second);
@@ -50,36 +50,36 @@ void test(void)
 	count_references(&fiveth);
 	count_references(&sixth);
 
-	printf("Chunks states before my_free:\n\n");
+	printf("Chunks states before cfree:\n\n");
 	
 	rbtree_print(tree);
 
-	my_free(second);
-	my_free(third);
-	my_free(fiveth);
-	my_free(sixth);
+	cfree(second);
+	cfree(third);
+	cfree(fiveth);
+	cfree(sixth);
 
 	delete_references(&second);
 	delete_references(&third);
 	delete_references(&fiveth);
 	delete_references(&sixth);
 
-	printf("\nChunks states after my_free:\n\n");
+	printf("\nChunks states after cfree:\n\n");
 	
 	rbtree_print(tree);
 
-	second = my_malloc(48);
-	third = my_malloc(50);
-	sixth = my_malloc(39);
-	fiveth = my_malloc(230);
+	second = cmalloc(48);
+	third = cmalloc(50);
+	sixth = cmalloc(39);
+	fiveth = cmalloc(230);
 
 	count_references(&second);
 	count_references(&third);
 	count_references(&sixth);
 	count_references(&fiveth);
 
-	sixth = my_malloc(39);
-	fiveth = my_malloc(230);
+	sixth = cmalloc(39);
+	fiveth = cmalloc(230);
 
 	count_references(&sixth);
 	count_references(&fiveth);

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 #include <string.h>
-#include "my_malloc.h"
+#include "cmalloc.h"
 
 #define NODE_RED 1
 #define NODE_BLACK 0

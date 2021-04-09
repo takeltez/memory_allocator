@@ -1,5 +1,5 @@
-#include "my_free.h"
-#include "my_malloc.h"
+#include "cfree.h"
+#include "cmalloc.h"
 #include "rbtree.h"
 
 extern rbtree *tree;
@@ -22,7 +22,7 @@ void count_references(void *ptr)
 	{
 		if(references[i] == ptr)
 		{
-			my_free(ref_vals[i]);
+			cfree(ref_vals[i]);
 
 			ref_vals[i] = *(size_t *)ptr;
 
@@ -42,7 +42,7 @@ void count_references(void *ptr)
 	}
 }
 
-void my_free(void *ptr)
+void cfree(void *ptr)
 {
 	size_t *item;
 

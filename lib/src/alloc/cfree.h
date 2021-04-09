@@ -10,4 +10,4 @@ size_t *ref_vals[REF_COUNT];
 
 void delete_references(void *ptr);
 void count_references(void *ptr);
-void my_free(void *ptr);
+void cfree(void *ptr);
