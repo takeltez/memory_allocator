@@ -36,54 +36,41 @@ void chunk_print(void)
 
 void test(void)
 {
-	void *first = cmalloc(100);
-	void *second = cmalloc(10);
-	void *third = cmalloc(50);
-	void *fourth = cmalloc(150);
-	void *fiveth = cmalloc(40);
-	void *sixth = cmalloc(30);
+	void *first = NULL;
+	void *second = NULL; 
+	void *third = NULL; 
+	void *fourth = NULL; 
+	void *fiveth = NULL; 
+	void *sixth = NULL;
 
-	count_references(&first);
-	count_references(&second);
-	count_references(&third);
-	count_references(&fourth);
-	count_references(&fiveth);
-	count_references(&sixth);
+	cmalloc(100, &first);
+	cmalloc(10, &second);
+	cmalloc(50, &third);
+	cmalloc(150, &fourth);
+	cmalloc(40, &fiveth);
+	cmalloc(30, &sixth);
 
 	printf("Chunks states before cfree:\n\n");
 	
 	rbtree_print(tree);
 
-	cfree(second);
-	cfree(third);
-	cfree(fiveth);
-	cfree(sixth);
-
-	delete_references(&second);
-	delete_references(&third);
-	delete_references(&fiveth);
-	delete_references(&sixth);
+	cfree(&second, 0);
+	cfree(&third, 0);
+	cfree(&fiveth, 0);
+	cfree(&sixth, 0);
 
 	printf("\nChunks states after cfree:\n\n");
 	
 	rbtree_print(tree);
 
-	second = cmalloc(48);
-	third = cmalloc(50);
-	sixth = cmalloc(39);
-	fiveth = cmalloc(230);
+	cmalloc(48, &second);
+	cmalloc(50, &third);
+	cmalloc(230, &fiveth);
+	cmalloc(39, &sixth);
 
-	count_references(&second);
-	count_references(&third);
-	count_references(&sixth);
-	count_references(&fiveth);
-
-	sixth = cmalloc(39);
-	fiveth = cmalloc(230);
-
-	count_references(&sixth);
-	count_references(&fiveth);
-
+	cmalloc(230, &fiveth);
+	cmalloc(39, &sixth);
+	
 	printf("\nChunks states after using freed blocks again:\n\n");
 	
 	rbtree_print(tree);

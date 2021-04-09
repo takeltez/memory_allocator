@@ -17,7 +17,7 @@ build/main.o: src/main.c src/logger/logger.h
 build/cmalloc.o: src/alloc/cmalloc.c src/alloc/cmalloc.h src/alloc/chunk_handler.h src/rbtree/rbtree.h
 		$(CC) $(CFLAGS) -fPIC -c src/alloc/cmalloc.c -o build/cmalloc.o -Isrc/rbtree -Isrc/alloc
 
-build/cfree.o: src/alloc/cfree.c src/alloc/cfree.h src/alloc/cmalloc.h src/rbtree/rbtree.h
+build/cfree.o: src/alloc/cfree.c src/alloc/cfree.h src/alloc/cmalloc.h src/rbtree/rbtree.h src/alloc/cfree.h
 		$(CC) $(CFLAGS) -fPIC -c src/alloc/cfree.c -o build/cfree.o -Isrc/rbtree -Isrc/alloc
 
 build/chunk_handler.o: src/alloc/chunk_handler.c src/alloc/chunk_handler.h src/alloc/cmalloc.h src/rbtree/rbtree.h

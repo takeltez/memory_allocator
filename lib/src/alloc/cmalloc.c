@@ -1,6 +1,7 @@
 #include "cmalloc.h"
 #include "chunk_handler.h"
 #include "rbtree.h"
+#include "cfree.h"
 
 uint32_t call_ind = 0;
 
@@ -8,7 +9,7 @@ rbtree empty_node = {0, 0, {NULL}, NODE_BLACK, NULL, NULL, NULL };
 rbtree *null_node = &empty_node;
 rbtree *tree = NULL;
 
-void *cmalloc(size_t size)
+void cmalloc(size_t size, void *ptr)
 {
 	void *chunk_user_ptr;
 	void *chunk_start_ptr;
@@ -19,6 +20,8 @@ void *cmalloc(size_t size)
 	assert(size > 0);
 
 	size += OFFSET_TO_USER_SEG;
+
+	count_references(ptr);
 
 	free_space -= size;
 
@@ -35,12 +38,14 @@ void *cmalloc(size_t size)
 	else
 	{
 		chunk_start_ptr = free_chunks_reuse(size);
-		
+			
 		if (chunk_start_ptr)
 		{
 			chunk_user_ptr = chunk_start_ptr + OFFSET_TO_USER_SEG;
 
-			return chunk_user_ptr;
+			*(size_t *)ptr = chunk_user_ptr;
+
+			return;
 		}
 
 		else
@@ -61,8 +66,30 @@ void *cmalloc(size_t size)
 
 	tree = rbtree_add(tree, chunk_list + call_ind);
 	
+	*(size_t *)ptr = chunk_user_ptr;
+	
 	++call_ind;
-
-	return chunk_user_ptr;
 }
 
+void count_references(void *ptr)
+{
+	for(size_t i = 0; i < REF_COUNT; ++i)
+	{
+		if(references[i] == ptr)
+		{
+			cfree(ptr, 1);
+		
+			return;
+		}
+	}
+
+	for(size_t i = 0; i < REF_COUNT; ++i)
+	{
+		if(references[i] == NULL)
+		{	
+			references[i] = ptr;
+		
+			break;
+		}
+	}
+}

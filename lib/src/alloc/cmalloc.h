@@ -12,6 +12,7 @@
 #define OFFSET_TO_IS_USED_SEG 4
 #define OFFSET_TO_USER_SEG (OFFSET_TO_SIZE_SEG + OFFSET_TO_IS_USED_SEG)
 #define DEVIATION 5
+#define REF_COUNT 20
 
 typedef struct chunk
 {
@@ -22,4 +23,7 @@ typedef struct chunk
 
 mem_chunk chunk_list[CHUNK_COUNT];
 
-void *cmalloc(size_t size);
+size_t *references[REF_COUNT];
+
+void count_references(void *ptr);
+void cmalloc(size_t size, void *ptr);
