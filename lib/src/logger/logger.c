@@ -42,7 +42,7 @@ void test(void)
 	void *fourth = NULL; 
 	void *fiveth = NULL; 
 	void *sixth = NULL;
-
+	
 	cmalloc(100, &first);
 	cmalloc(10, &second);
 	cmalloc(50, &third);
@@ -70,7 +70,7 @@ void test(void)
 
 	cmalloc(230, &fiveth);
 	cmalloc(39, &sixth);
-	
+
 	printf("\nChunks states after using freed blocks again:\n\n");
 	
 	rbtree_print(tree);

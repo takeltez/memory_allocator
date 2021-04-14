@@ -33,7 +33,5 @@ void cfree(void *ptr, uint32_t flag)
 	if (chunk_for_free)
 	{
 		*chunk_for_free->is_used = 0;
-
-		ptr = NULL;
 	}
 }

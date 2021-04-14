@@ -76,9 +76,9 @@ void count_references(void *ptr)
 	for(size_t i = 0; i < REF_COUNT; ++i)
 	{
 		if(references[i] == ptr)
-		{
+		{	
 			cfree(ptr, 1);
-		
+
 			return;
 		}
 	}
@@ -86,9 +86,9 @@ void count_references(void *ptr)
 	for(size_t i = 0; i < REF_COUNT; ++i)
 	{
 		if(references[i] == NULL)
-		{	
+		{
 			references[i] = ptr;
-		
+			
 			break;
 		}
 	}

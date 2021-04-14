@@ -7,12 +7,12 @@
 #include <inttypes.h>
 
 #define HEAP_SIZE 10000
-#define CHUNK_COUNT 40
+#define CHUNK_COUNT 1000
+#define REF_COUNT 1000
 #define OFFSET_TO_SIZE_SEG 8
 #define OFFSET_TO_IS_USED_SEG 4
 #define OFFSET_TO_USER_SEG (OFFSET_TO_SIZE_SEG + OFFSET_TO_IS_USED_SEG)
 #define DEVIATION 5
-#define REF_COUNT 20
 
 typedef struct chunk
 {

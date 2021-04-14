@@ -7,8 +7,7 @@
 
 #define NODE_RED 1
 #define NODE_BLACK 0
-
-#define EQ_CHUNKS_COUNT 10
+#define EQ_CHUNKS_COUNT 1000
 
 typedef struct rbtree
 {
