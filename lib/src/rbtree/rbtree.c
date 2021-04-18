@@ -20,11 +20,6 @@ rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr)
 				{
 					new_node->chunks[new_node->filled_elems_count] = chunk_ptr;
 
-				/*	if(*chunk_ptr->size >= 96 - DEVIATION && *chunk_ptr->size <= 96)
-						printf("%ld, %ld, %d\n", new_node->filled_elems_count, *new_node->chunks[new_node->filled_elems_count]->size,
-							*new_node->chunks[new_node->filled_elems_count]->is_used);*/
-
-
 					++new_node->filled_elems_count;
 
 					return root;
@@ -50,10 +45,6 @@ rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr)
 			{
 				new_node->chunks[new_node->filled_elems_count] = chunk_ptr;
 
-			/*	if(*chunk_ptr->size == 96)
-					printf("%ld, %ld, %d\n", new_node->filled_elems_count, *new_node->chunks[new_node->filled_elems_count]->size,
-						*new_node->chunks[new_node->filled_elems_count]->is_used);*/
-
 				++new_node->filled_elems_count;
 
 				return root;
@@ -76,10 +67,6 @@ rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr)
 	new_node->parent = parent_node;
 	new_node->left = null_node;
 	new_node->right = null_node;
-
-/*	if(*chunk_ptr->size == 96)
-		printf("%ld, %ld, %d\n", new_node->filled_elems_count - 1, *new_node->chunks[0]->size,
-			*new_node->chunks[0]->is_used);*/
 
 	if (parent_node != null_node) //Если был создан не корень
 	{	
@@ -114,8 +101,7 @@ mem_chunk *rbtree_lookup_freed_chunk(rbtree *root, size_t size)
 			if (size >= root->chunk_size - DEVIATION)
 			{
 				for (size_t i = 0; i < root->filled_elems_count; ++i)
-				{	/*if(root->chunk_size >= 96 - DEVIATION && root->chunk_size <= 96)
-					printf("Q %ld, %ld, %d\n", i, *root->chunks[i]->size, *root->chunks[i]->is_used);*/
+				{
 					if (!(*root->chunks[i]->is_used))
 					{
 						return root->chunks[i];
@@ -141,8 +127,6 @@ mem_chunk *rbtree_lookup_freed_chunk(rbtree *root, size_t size)
 		{
 			for (size_t i = 0; i < root->filled_elems_count; ++i)
 			{
-			/*	if(root->chunk_size == 96)
-					printf("Q %ld, %ld, %d\n", i, *root->chunks[i]->size, *root->chunks[i]->is_used);*/
 				if (!(*root->chunks[i]->is_used))
 				{
 					return root->chunks[i];
