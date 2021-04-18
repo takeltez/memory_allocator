@@ -11,27 +11,27 @@ int main(int argc, char const **argv)
 	void *(*cmalloc)(size_t size, void *ptr) = dlsym(handle, "cmalloc");
 	void *(*cfree)(void *ptr, uint32_t flag) = dlsym(handle, "cfree");
 
-	srand(time(NULL));
-
 	int *ptr1[1000];
 	int *ptr2[1000];
+
+	srand(time(NULL));
 
 	clock_t start, end;
 
 	start = clock();
 
-	for(size_t i = 0; i < 100; ++i)
+	for(size_t i = 0; i < 1000; ++i)
 	{
 		ptr1[i] = malloc(rand() % 100 + 1);
 	}
 
 	end = clock();
 
-	printf("malloc total time: %f seconds\n", (double)(end - start) / CLOCKS_PER_SEC);
+	printf("standart malloc total time: %f seconds\n", (double)(end - start) / CLOCKS_PER_SEC);
 
 	start = clock();
 
-	for(size_t i = 0; i < 100; ++i)
+	for(size_t i = 0; i < 1000; ++i)
 	{
 		cmalloc(rand() % 100 + 1, ptr2 + i);
 	}
@@ -42,18 +42,18 @@ int main(int argc, char const **argv)
 
 	start = clock();
 
-	for(size_t i = 0; i < 100; ++i)
+	for(size_t i = 0; i < 1000; ++i)
 	{
 		free(ptr1[i]);
 	}
 
 	end = clock();
 
-	printf("free total time: %f seconds\n", (double)(end - start) / CLOCKS_PER_SEC);
+	printf("standart free total time: %f seconds\n", (double)(end - start) / CLOCKS_PER_SEC);
 
 	start = clock();
 
-	for(size_t i = 0; i < 100; ++i)
+	for(size_t i = 0; i < 1000; ++i)
 	{
 		cfree(ptr2 + i, 0);
 	}

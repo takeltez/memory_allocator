@@ -26,7 +26,7 @@ void cfree(void *ptr, uint32_t flag)
 
 	mem_chunk *chunk_for_free = NULL;
 
-	size_t size = *(size_t *)(ptr - OFFSET_TO_USER_SEG);
+	size_t size = *(size_t *)(ptr - USER_SEG_OFFSET);
 
 	chunk_for_free = rbtree_lookup_chunk_for_free(tree, size, ptr);
 

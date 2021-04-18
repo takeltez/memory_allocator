@@ -1,10 +1,10 @@
 #include "logger.h"
 #include "cfree.h"
 #include "cmalloc.h"
+#include <time.h>
 
 extern rbtree *tree;
 extern rbtree *null_node;
-extern uint32_t call_ind;
 
 void rbtree_print(rbtree *root)
 {
@@ -15,7 +15,7 @@ void rbtree_print(rbtree *root)
 		for (size_t i = 0; i < root->filled_elems_count; ++i)
 		{
 			printf("Chunk[%ld]: meta segment: [%p], user segment: [%p], size: %ld, is used: %u\n", 
-				i, root->chunks[i]->ptr, root->chunks[i]->ptr + OFFSET_TO_USER_SEG, *root->chunks[i]->size, *root->chunks[i]->is_used);
+				i, root->chunks[i]->ptr, root->chunks[i]->ptr + USER_SEG_OFFSET, *root->chunks[i]->size, *root->chunks[i]->is_used);
 		}
 
 		printf("Parent node: %ld\nLeft node: %ld\nRight node: %ld\n\n", 
@@ -23,14 +23,6 @@ void rbtree_print(rbtree *root)
 		
 		rbtree_print(root->left);
 		rbtree_print(root->right);
-	}
-}
-
-void chunk_print(void)
-{
-	for (size_t i = 0; i < call_ind; ++i)
-	{
-		printf("Chunk %ld start ptr: [%p]\n", i, chunk_list[i].ptr);
 	}
 }
 

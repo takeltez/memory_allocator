@@ -6,12 +6,11 @@
 #include <assert.h>
 #include <inttypes.h>
 
-#define HEAP_SIZE 10000
+#define HEAP_SIZE 100000
 #define CHUNK_COUNT 1000
 #define REF_COUNT 1000
-#define OFFSET_TO_SIZE_SEG 8
-#define OFFSET_TO_IS_USED_SEG 4
-#define OFFSET_TO_USER_SEG (OFFSET_TO_SIZE_SEG + OFFSET_TO_IS_USED_SEG)
+#define SIZE_SEG_OFFSET 2
+#define USER_SEG_OFFSET 12
 #define DEVIATION 5
 
 typedef struct chunk
