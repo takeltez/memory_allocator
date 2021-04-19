@@ -31,7 +31,7 @@ void cfree(void *ptr, uint32_t flag)
 	chunk_for_free = rbtree_lookup_chunk_for_free(tree, size, ptr);
 
 	if (chunk_for_free)
-	{
+	{		
 		*chunk_for_free->is_used = 0;
 	}
 }

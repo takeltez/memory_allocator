@@ -11,6 +11,31 @@ int main(int argc, char const **argv)
 	void *(*cmalloc)(size_t size, void *ptr) = dlsym(handle, "cmalloc");
 	void *(*cfree)(void *ptr, uint32_t flag) = dlsym(handle, "cfree");
 
+/*	int *arr;
+
+	cmalloc(10 * sizeof(int), &arr);
+
+	for(size_t i = 0; i < 10; ++i)
+	{
+		arr[i] = i;
+
+		printf("%d\n", arr[i]);
+	}
+
+	cfree(&arr, 0);
+
+	cmalloc(5 * sizeof(int), &arr);
+
+	for(size_t i = 0; i < 5; ++i)
+	{
+		arr[i] = i + 10;
+	}
+
+	for(size_t i = 0; i < 10; ++i)
+	{
+		printf("%d\n", arr[i]);
+	}*/
+
 	int n = atoi(argv[1]);
 
 	int *ptr1[n];

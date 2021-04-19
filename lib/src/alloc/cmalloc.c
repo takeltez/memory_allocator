@@ -3,7 +3,7 @@
 #include "rbtree.h"
 #include "cfree.h"
 
-rbtree empty_node = {0, 0, {NULL}, NODE_BLACK, NULL, NULL, NULL };
+rbtree empty_node = {0, 0, {NULL}, NODE_BLACK, NULL, NULL, NULL};
 rbtree *null_node = &empty_node;
 rbtree *tree = NULL;
 
