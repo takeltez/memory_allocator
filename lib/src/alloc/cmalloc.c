@@ -59,7 +59,7 @@ void cmalloc(size_t size, void *ptr)
 
 	chunk_list[call_ind].ptr = chunk_start_ptr;
 	chunk_list[call_ind].size = (size_t *)chunk_start_ptr;
-	chunk_list[call_ind].is_used = (uint32_t *)chunk_start_ptr + SIZE_SEG_OFFSET;
+	chunk_list[call_ind].is_used = (uint32_t *)(chunk_start_ptr + SIZE_SEG_OFFSET);
 
 	*chunk_list[call_ind].size = size;
 	*chunk_list[call_ind].is_used = 1;
