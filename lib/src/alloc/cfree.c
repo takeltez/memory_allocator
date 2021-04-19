@@ -28,7 +28,7 @@ void cfree(void *ptr, uint32_t flag)
 
 	size_t size = *(size_t *)(ptr - USER_SEG_OFFSET);
 
-	chunk_for_free = rbtree_lookup_chunk_for_free(tree, size, ptr);
+	chunk_for_free = using_chunk_lookup(tree, size, ptr);
 
 	if (chunk_for_free)
 	{		

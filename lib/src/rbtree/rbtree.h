@@ -20,11 +20,11 @@ typedef struct rbtree
 	struct rbtree *right;
 } rbtree;
 
-rbtree *rbtree_add(rbtree *root, mem_chunk *chunk_ptr);
-mem_chunk *rbtree_lookup_freed_chunk(rbtree *root, size_t size);
-mem_chunk *rbtree_lookup_chunk_for_free(rbtree *root, size_t size, void *ptr);
+rbtree *add_chunk(rbtree *root, mem_chunk *chunk_ptr);
+mem_chunk *free_chunk_lookup(rbtree *root, size_t size);
+mem_chunk *using_chunk_lookup(rbtree *root, size_t size, void *ptr);
 
-rbtree *rbtree_add_fixup(rbtree *root, rbtree *curr_node);
+rbtree *rbtree_fixup(rbtree *root, rbtree *curr_node);
 rbtree *rbtree_left_rotate(rbtree *root, rbtree *curr_node);
 rbtree *rbtree_right_rotate(rbtree *root, rbtree *curr_node);
 

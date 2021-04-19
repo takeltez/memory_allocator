@@ -8,7 +8,7 @@ void *free_chunks_reuse(size_t size)
 {
 	mem_chunk *free_chunk = NULL;
 	
-	free_chunk = rbtree_lookup_freed_chunk(tree, size);
+	free_chunk = free_chunk_lookup(tree, size);
 
 	if (free_chunk)
 	{

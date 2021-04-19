@@ -67,7 +67,7 @@ void cmalloc(size_t size, void *ptr)
 	chunk_user_ptr = chunk_start_ptr + USER_SEG_OFFSET;
 	last_chunk_ptr = chunk_start_ptr + size;
 
-	tree = rbtree_add(tree, chunk_list + call_ind);
+	tree = add_chunk(tree, chunk_list + call_ind);
 
 	*(size_t *)ptr = chunk_user_ptr;
 	
