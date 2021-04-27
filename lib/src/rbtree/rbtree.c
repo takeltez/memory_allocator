@@ -16,11 +16,11 @@ rbtree *add_chunk(rbtree *root, mem_chunk *chunk_ptr)
 		{
 			if(*chunk_ptr->size >= new_node->chunk_size - DEVIATION)
 			{
-				if(new_node->filled_elems_count < EQ_CHUNKS_COUNT)
+				if(new_node->chunks_array_size < EQ_CHUNKS_COUNT)
 				{
-					new_node->chunks[new_node->filled_elems_count] = chunk_ptr;
+					new_node->chunks[new_node->chunks_array_size] = chunk_ptr;
 
-					++new_node->filled_elems_count;
+					++new_node->chunks_array_size;
 
 					return root;
 				}
@@ -41,11 +41,11 @@ rbtree *add_chunk(rbtree *root, mem_chunk *chunk_ptr)
 
 		else if(*chunk_ptr->size == new_node->chunk_size)
 		{	
-			if(new_node->filled_elems_count < EQ_CHUNKS_COUNT)
+			if(new_node->chunks_array_size < EQ_CHUNKS_COUNT)
 			{
-				new_node->chunks[new_node->filled_elems_count] = chunk_ptr;
+				new_node->chunks[new_node->chunks_array_size] = chunk_ptr;
 
-				++new_node->filled_elems_count;
+				++new_node->chunks_array_size;
 
 				return root;
 			}
@@ -61,7 +61,7 @@ rbtree *add_chunk(rbtree *root, mem_chunk *chunk_ptr)
 
 	//Инициализируем поля нода
 	new_node->chunk_size = *chunk_ptr->size;
-	new_node->filled_elems_count = 1;
+	new_node->chunks_array_size = 1;
 	new_node->chunks[0] = chunk_ptr;
 	new_node->color = NODE_RED;
 	new_node->parent = parent_node;
@@ -100,7 +100,7 @@ mem_chunk *free_chunk_lookup(rbtree *root, size_t size)
 		{	
 			if(size >= root->chunk_size - DEVIATION)
 			{
-				for (size_t i = 0; i < root->filled_elems_count; ++i)
+				for (size_t i = 0; i < root->chunks_array_size; ++i)
 				{
 					if(!(*root->chunks[i]->is_used))
 					{
@@ -125,7 +125,7 @@ mem_chunk *free_chunk_lookup(rbtree *root, size_t size)
 
 		else if(size == root->chunk_size)
 		{
-			for (size_t i = 0; i < root->filled_elems_count; ++i)
+			for (size_t i = 0; i < root->chunks_array_size; ++i)
 			{
 				if(!(*root->chunks[i]->is_used))
 				{
@@ -153,7 +153,7 @@ mem_chunk *using_chunk_lookup(rbtree *root, size_t size, void *ptr)
 		{
 			if(size >= root->chunk_size - DEVIATION)
 			{
-				for (size_t i = 0; i < root->filled_elems_count; ++i)
+				for (size_t i = 0; i < root->chunks_array_size; ++i)
 				{
 					if(root->chunks[i]->ptr == ptr - USER_SEG_OFFSET)
 					{
@@ -177,7 +177,7 @@ mem_chunk *using_chunk_lookup(rbtree *root, size_t size, void *ptr)
 		
 		else if(size == root->chunk_size)
 		{
-			for (size_t i = 0; i < root->filled_elems_count; ++i)
+			for (size_t i = 0; i < root->chunks_array_size; ++i)
 			{
 				if(root->chunks[i]->ptr == ptr - USER_SEG_OFFSET)
 				{

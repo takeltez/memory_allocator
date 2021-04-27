@@ -1,7 +1,6 @@
 #include "logger.h"
 #include "cfree.h"
 #include "cmalloc.h"
-#include <time.h>
 
 extern rbtree *tree;
 extern rbtree *null_node;
@@ -12,7 +11,7 @@ void rbtree_print(rbtree *root)
 	{	
 		printf("Key(chunks size): %ld\n", root->chunk_size);
 
-		for (size_t i = 0; i < root->filled_elems_count; ++i)
+		for (size_t i = 0; i < root->chunks_array_size; ++i)
 		{
 			printf("Chunk[%ld]: meta segment: [%p], user segment: [%p], size: %ld, is used: %u\n", 
 				i, root->chunks[i]->ptr, root->chunks[i]->ptr + USER_SEG_OFFSET, *root->chunks[i]->size, *root->chunks[i]->is_used);

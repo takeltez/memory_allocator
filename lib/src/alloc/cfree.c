@@ -21,7 +21,7 @@ void cfree(void *ptr, uint32_t flag)
 	{
 		delete_references(ptr);
 	}
-
+	
 	ptr = *(size_t *)ptr;
 
 	mem_chunk *chunk_for_free = NULL;

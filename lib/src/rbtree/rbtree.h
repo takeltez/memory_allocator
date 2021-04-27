@@ -12,9 +12,9 @@
 typedef struct rbtree
 {
 	size_t chunk_size;
-	size_t filled_elems_count;
+	size_t chunks_array_size;
+	uint32_t color;	
 	mem_chunk *chunks[EQ_CHUNKS_COUNT];
-	uint32_t color;
 	struct rbtree *parent;
 	struct rbtree *left;
 	struct rbtree *right;

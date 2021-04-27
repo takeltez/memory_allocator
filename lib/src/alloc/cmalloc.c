@@ -9,6 +9,8 @@ rbtree *tree = NULL;
 
 void cmalloc(size_t size, void *ptr)
 {	
+	assert(size > 0);
+
 	void *chunk_user_ptr;
 	void *chunk_start_ptr;
 
@@ -16,8 +18,6 @@ void cmalloc(size_t size, void *ptr)
 
 	static uint32_t call_ind = 0;
 	static size_t free_space = HEAP_SIZE;
-
-	assert(size > 0);
 
 	size += USER_SEG_OFFSET;
 
