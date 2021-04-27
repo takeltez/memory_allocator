@@ -27,17 +27,6 @@ void rbtree_print(rbtree *root)
 
 void test(void)
 {
-/*	srand(time(NULL));	
-
-	int *ptr[1000];
-
-	for(size_t i = 0; i < 1000; ++i)
-	{
-		cmalloc(rand() % 100 + 1, ptr + i);
-	}
-
-	rbtree_print(tree);*/
-
 	void *first = NULL;
 	void *second = NULL; 
 	void *third = NULL; 
