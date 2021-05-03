@@ -26,7 +26,7 @@ void cfree(void *ptr, uint32_t flag)
 	
 	ptr = *(size_t *)ptr;
 
-	is_used = (uint32_t *)(ptr - IS_USED_SEG_OFFSET);
+	is_used = (uint32_t *)(ptr - IS_USED_SEG);
 
 	*is_used = 0;
 }

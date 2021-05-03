@@ -155,7 +155,7 @@ mem_chunk *using_chunk_lookup(rbtree *root, size_t size, void *ptr)
 			{
 				for (size_t i = 0; i < root->chunks_array_size; ++i)
 				{
-					if(root->chunks[i]->ptr == ptr - USER_SEG_OFFSET)
+					if(root->chunks[i]->ptr == ptr - USER_SEG)
 					{
 						return root->chunks[i];
 					}
@@ -179,7 +179,7 @@ mem_chunk *using_chunk_lookup(rbtree *root, size_t size, void *ptr)
 		{
 			for (size_t i = 0; i < root->chunks_array_size; ++i)
 			{
-				if(root->chunks[i]->ptr == ptr - USER_SEG_OFFSET)
+				if(root->chunks[i]->ptr == ptr - USER_SEG)
 				{
 					return root->chunks[i];
 				}

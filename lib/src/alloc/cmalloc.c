@@ -19,7 +19,7 @@ void cmalloc(size_t size, void *ptr)
 	static size_t call_ind = 0;
 	static size_t free_space = HEAP_SIZE;
 
-	size += USER_SEG_OFFSET;
+	size += USER_SEG;
 
 	if(free_space < size)
 	{	
@@ -45,7 +45,7 @@ void cmalloc(size_t size, void *ptr)
 
 		if(service_seg_ptr)
 		{
-			user_seg_ptr = service_seg_ptr + USER_SEG_OFFSET;
+			user_seg_ptr = service_seg_ptr + USER_SEG;
 
 			*(size_t *)ptr = user_seg_ptr;
 
@@ -59,12 +59,12 @@ void cmalloc(size_t size, void *ptr)
 
 	chunk_list[call_ind].ptr = service_seg_ptr;
 	chunk_list[call_ind].size = (size_t *)service_seg_ptr;
-	chunk_list[call_ind].is_used = (uint32_t *)(service_seg_ptr + SIZE_SEG_OFFSET);
+	chunk_list[call_ind].is_used = (uint32_t *)(service_seg_ptr + SIZE_SEG);
 
 	*chunk_list[call_ind].size = size;
 	*chunk_list[call_ind].is_used = 1;
 
-	user_seg_ptr = service_seg_ptr + USER_SEG_OFFSET;
+	user_seg_ptr = service_seg_ptr + USER_SEG;
 	left_memory_ptr = service_seg_ptr + size;
 
 	tree = add_chunk(tree, chunk_list + call_ind);
