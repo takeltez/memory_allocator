@@ -65,4 +65,29 @@ void test(void)
 	printf("\nChunks states after using freed blocks again:\n\n");
 	
 	rbtree_print(tree);
+
+/*	int *arr;
+
+	cmalloc(10 * sizeof(int), &arr);
+
+	for(size_t i = 0; i < 10; ++i)
+	{
+		arr[i] = i;
+
+		printf("%d\n", arr[i]);
+	}
+
+	cmalloc(7 * sizeof(int), &arr);
+
+	for(size_t i = 0; i < 5; ++i)
+	{
+		arr[i] = i + 10;
+	}
+
+	for(size_t i = 0; i < 10; ++i)
+	{
+		printf("%d\n", arr[i]);
+	}
+
+	rbtree_print(tree);*/
 }

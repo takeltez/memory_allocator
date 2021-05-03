@@ -16,7 +16,7 @@ void cmalloc(size_t size, void *ptr)
 
 	static void *last_chunk_ptr;
 
-	static uint32_t call_ind = 0;
+	static size_t call_ind = 0;
 	static size_t free_space = HEAP_SIZE;
 
 	size += USER_SEG_OFFSET;
@@ -80,7 +80,7 @@ void count_references(void *ptr)
 	for(size_t i = 0; i < REF_COUNT; ++i)
 	{
 		if(references[i] == ptr)
-		{	
+		{
 			cfree(ptr, 1);
 
 			return;

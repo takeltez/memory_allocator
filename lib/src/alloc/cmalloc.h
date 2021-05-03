@@ -9,6 +9,7 @@
 #define HEAP_SIZE 100000
 #define CHUNK_COUNT 1000
 #define REF_COUNT 1000
+#define IS_USED_SEG_OFFSET 4
 #define SIZE_SEG_OFFSET 8
 #define USER_SEG_OFFSET 12
 #define DEVIATION 5

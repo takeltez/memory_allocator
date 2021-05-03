@@ -16,7 +16,9 @@ void delete_references(void *ptr)
 }
 
 void cfree(void *ptr, uint32_t flag)
-{
+{	
+	uint32_t *is_used;
+	
 	if(!flag)
 	{
 		delete_references(ptr);
@@ -24,14 +26,7 @@ void cfree(void *ptr, uint32_t flag)
 	
 	ptr = *(size_t *)ptr;
 
-	mem_chunk *chunk_for_free = NULL;
+	is_used = (uint32_t *)(ptr - IS_USED_SEG_OFFSET);
 
-	size_t size = *(size_t *)(ptr - USER_SEG_OFFSET);
-
-	chunk_for_free = using_chunk_lookup(tree, size, ptr);
-
-	if (chunk_for_free)
-	{		
-		*chunk_for_free->is_used = 0;
-	}
+	*is_used = 0;
 }
