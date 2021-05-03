@@ -11,10 +11,10 @@ void cmalloc(size_t size, void *ptr)
 {	
 	assert(size > 0);
 
-	void *chunk_user_ptr;
-	void *chunk_start_ptr;
+	void *user_seg_ptr;
+	void *service_seg_ptr;
 
-	static void *last_chunk_ptr;
+	static void *left_memory_ptr;
 
 	static size_t call_ind = 0;
 	static size_t free_space = HEAP_SIZE;
@@ -23,7 +23,7 @@ void cmalloc(size_t size, void *ptr)
 
 	if(free_space < size)
 	{	
-		chunk_start_ptr = sbrk(size);
+		service_seg_ptr = sbrk(size);
 		
 		free_space = size;
 	}
@@ -36,40 +36,40 @@ void cmalloc(size_t size, void *ptr)
 
 	if(!call_ind)
 	{
-		chunk_start_ptr = sbrk(HEAP_SIZE);
+		service_seg_ptr = sbrk(HEAP_SIZE);
 	}
 	else
 	{
 
-		chunk_start_ptr = free_chunks_reuse(size);
+		service_seg_ptr = free_chunks_reuse(size);
 
-		if(chunk_start_ptr)
+		if(service_seg_ptr)
 		{
-			chunk_user_ptr = chunk_start_ptr + USER_SEG_OFFSET;
+			user_seg_ptr = service_seg_ptr + USER_SEG_OFFSET;
 
-			*(size_t *)ptr = chunk_user_ptr;
+			*(size_t *)ptr = user_seg_ptr;
 
 			return;
 		}
 		else
 		{
-			chunk_start_ptr = last_chunk_ptr;
+			service_seg_ptr = left_memory_ptr;
 		}
 	}
 
-	chunk_list[call_ind].ptr = chunk_start_ptr;
-	chunk_list[call_ind].size = (size_t *)chunk_start_ptr;
-	chunk_list[call_ind].is_used = (uint32_t *)(chunk_start_ptr + SIZE_SEG_OFFSET);
+	chunk_list[call_ind].ptr = service_seg_ptr;
+	chunk_list[call_ind].size = (size_t *)service_seg_ptr;
+	chunk_list[call_ind].is_used = (uint32_t *)(service_seg_ptr + SIZE_SEG_OFFSET);
 
 	*chunk_list[call_ind].size = size;
 	*chunk_list[call_ind].is_used = 1;
 
-	chunk_user_ptr = chunk_start_ptr + USER_SEG_OFFSET;
-	last_chunk_ptr = chunk_start_ptr + size;
+	user_seg_ptr = service_seg_ptr + USER_SEG_OFFSET;
+	left_memory_ptr = service_seg_ptr + size;
 
 	tree = add_chunk(tree, chunk_list + call_ind);
 
-	*(size_t *)ptr = chunk_user_ptr;
+	*(size_t *)ptr = user_seg_ptr;
 	
 	++call_ind;
 
