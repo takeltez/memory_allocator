@@ -102,7 +102,7 @@ mem_chunk *free_chunk_lookup(rbtree *root, size_t size)
 			{
 				for (size_t i = 0; i < root->chunks_array_size; ++i)
 				{
-					if(!(*root->chunks[i]->is_used))
+					if(size <= *root->chunks[i]->size && !(*root->chunks[i]->is_used))
 					{
 						return root->chunks[i];
 					}
@@ -127,7 +127,7 @@ mem_chunk *free_chunk_lookup(rbtree *root, size_t size)
 		{
 			for (size_t i = 0; i < root->chunks_array_size; ++i)
 			{
-				if(!(*root->chunks[i]->is_used))
+				if(size <= *root->chunks[i]->size && !(*root->chunks[i]->is_used))
 				{
 					return root->chunks[i];
 				}

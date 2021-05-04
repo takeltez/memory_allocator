@@ -77,9 +77,9 @@ void test(void)
 		printf("%d\n", arr[i]);
 	}
 
-	cmalloc(7 * sizeof(int), &arr);
+	cmalloc(2 * sizeof(int), &arr);
 
-	for(size_t i = 0; i < 5; ++i)
+	for(size_t i = 0; i < 2; ++i)
 	{
 		arr[i] = i + 10;
 	}
