@@ -9,7 +9,7 @@ int main(int argc, char const **argv)
 	void *handle = dlopen("../lib/dlib/libmalloc.so", RTLD_LAZY);
 
 	void (*cmalloc)(size_t size, void *ptr) = dlsym(handle, "cmalloc");
-	void (*cfree)(void *ptr, uint32_t flag) = dlsym(handle, "cfree");
+	void (*cfree)(void *ptr) = dlsym(handle, "cfree");
 
 /*	int *arr;
 
@@ -22,7 +22,7 @@ int main(int argc, char const **argv)
 		printf("%d\n", arr[i]);
 	}
 
-	cfree(&arr, 0);
+	cfree(&arr);
 
 	cmalloc(5 * sizeof(int), &arr);
 
@@ -34,8 +34,8 @@ int main(int argc, char const **argv)
 	for(size_t i = 0; i < 10; ++i)
 	{
 		printf("%d\n", arr[i]);
-	}
-*/
+	}*/
+
 	int n = atoi(argv[1]);
 
 	int *ptr1[n];
@@ -82,7 +82,7 @@ int main(int argc, char const **argv)
 
 	for(size_t i = 0; i < n; ++i)
 	{
-		cfree(ptr2 + i, 0);
+		cfree(ptr2 + i);
 	}
 
 	end = clock();

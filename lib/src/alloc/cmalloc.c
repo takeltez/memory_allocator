@@ -81,9 +81,7 @@ void count_references(void *ptr)
 	{
 		if(references[i] == ptr)
 		{
-			cfree(ptr, 1);
-
-			return;
+			cfree(ptr);
 		}
 	}
 

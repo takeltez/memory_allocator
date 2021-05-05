@@ -15,14 +15,11 @@ void delete_references(void *ptr)
 	}
 }
 
-void cfree(void *ptr, uint32_t flag)
+void cfree(void *ptr)
 {	
 	uint32_t *is_used;
 	
-	if(!flag)
-	{
-		delete_references(ptr);
-	}
+	delete_references(ptr);
 	
 	ptr = *(size_t *)ptr;
 

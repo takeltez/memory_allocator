@@ -45,10 +45,10 @@ void test(void)
 	
 	rbtree_print(tree);
 
-	cfree(&second, 0);
-	cfree(&third, 0);
-	cfree(&fiveth, 0);
-	cfree(&sixth, 0);
+	cfree(&second);
+	cfree(&third);
+	cfree(&fiveth);
+	cfree(&sixth);
 
 	printf("\nChunks states after cfree:\n\n");
 	
