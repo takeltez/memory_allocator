@@ -13,7 +13,7 @@ void rbtree_print(rbtree *root)
 
 		for (size_t i = 0; i < root->chunks_array_size; ++i)
 		{
-			printf("Chunk[%ld]: meta segment: [%p], user segment: [%p], size: %ld, is used: %u\n", 
+			printf("Chunk[%ld]: service segment: [%p], user segment: [%p], size: %ld, is used: %u\n", 
 				i, root->chunks[i]->ptr, root->chunks[i]->ptr + USER_SEG, *root->chunks[i]->size, *root->chunks[i]->is_used);
 		}
 
