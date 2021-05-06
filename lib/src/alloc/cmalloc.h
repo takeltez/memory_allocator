@@ -6,9 +6,9 @@
 #include <assert.h>
 #include <inttypes.h>
 
-#define HEAP_SIZE 100000
-#define CHUNK_COUNT 1000
-#define REF_COUNT 1000
+#define HEAP_SIZE 1000000
+#define CHUNK_COUNT 10000
+#define REF_COUNT 10000
 #define IS_USED_SEG 4
 #define SIZE_SEG 8
 #define USER_SEG 12

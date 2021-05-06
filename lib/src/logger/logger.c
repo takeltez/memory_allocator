@@ -27,67 +27,78 @@ void rbtree_print(rbtree *root)
 
 void test(void)
 {
-	void *first = NULL;
-	void *second = NULL; 
-	void *third = NULL; 
-	void *fourth = NULL; 
-	void *fiveth = NULL; 
-	void *sixth = NULL;
-	
-	cmalloc(100, &first);
-	cmalloc(10, &second);
-	cmalloc(50, &third);
-	cmalloc(150, &fourth);
-	cmalloc(40, &fiveth);
-	cmalloc(30, &sixth);
+	char *arr1;
+	int *arr2;
+	float *arr3;
+	double *arr4;
 
-	printf("Chunks states before cfree:\n\n");
-	
-	rbtree_print(tree);
+	cmalloc(5 * sizeof(char), &arr1);
+	cmalloc(10 * sizeof(int), &arr2);
+	cmalloc(7 * sizeof(float), &arr3);
+	cmalloc(15 * sizeof(double), &arr4);
 
-	cfree(&second);
-	cfree(&third);
-	cfree(&fiveth);
-	cfree(&sixth);
-
-	printf("\nChunks states after cfree:\n\n");
-	
-	rbtree_print(tree);
-
-	cmalloc(48, &second);
-	cmalloc(50, &third);
-	cmalloc(230, &fiveth);
-	cmalloc(39, &sixth);
-
-	cmalloc(230, &fiveth);
-	cmalloc(39, &sixth);
-
-	printf("\nChunks states after using freed blocks again:\n\n");
-	
-	rbtree_print(tree);
-
-/*	int *arr;
-
-	cmalloc(10 * sizeof(int), &arr);
-
-	for(size_t i = 0; i < 10; ++i)
+	for(size_t i = 0, j = 'a'; i < 5; ++i, ++j)
 	{
-		arr[i] = i;
-
-		printf("%d\n", arr[i]);
-	}
-
-	cmalloc(2 * sizeof(int), &arr);
-
-	for(size_t i = 0; i < 2; ++i)
-	{
-		arr[i] = i + 10;
+		arr1[i] = j;
 	}
 
 	for(size_t i = 0; i < 10; ++i)
 	{
-		printf("%d\n", arr[i]);
+		arr2[i] = i;
 	}
 
-	rbtree_print(tree);*/
+	for(size_t i = 0; i < 7; ++i)
+	{
+		arr3[i] = i + 2.38;
+	}
+
+	for(size_t i = 0; i < 15; ++i)
+	{
+		arr4[i] = i - 12.38;
+	}
+
+	for(size_t i = 0; i < 5; ++i)
+	{
+		printf("%c ", arr1[i]);
+	}
+
+	printf("\n");	
+
+	for(size_t i = 0; i < 10; ++i)
+	{
+		printf("%d ", arr2[i]);
+	}
+
+	printf("\n");
+
+	for(size_t i = 0; i < 7; ++i)
+	{
+
+		printf("%.2f ", arr3[i]);
+	}
+
+	printf("\n");
+
+	for(size_t i = 0; i < 15; ++i)
+	{	
+		printf("%.2f ", arr4[i]);
+	}
+
+	printf("\n\n---------------------------\n");
+
+	rbtree_print(tree);
+
+	cfree(&arr1);
+	cfree(&arr3);
+
+	printf("---------------------------\n");	
+
+	rbtree_print(tree);	
+
+	cmalloc(5 * sizeof(char), &arr2);
+	cmalloc(7 * sizeof(float), &arr4);
+
+	printf("---------------------------\n");
+
+	rbtree_print(tree);
 }

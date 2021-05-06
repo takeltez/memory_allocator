@@ -69,6 +69,13 @@ void cmalloc(size_t size, void *ptr)
 
 	tree = add_chunk(tree, chunk_list + call_ind);
 
+	if (tree == NULL)
+	{
+		printf("Not enough space\n"); 
+
+		return;
+	}
+
 	*(size_t *)ptr = user_seg_ptr;
 	
 	++call_ind;

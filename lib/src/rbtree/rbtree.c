@@ -25,7 +25,7 @@ rbtree *add_chunk(rbtree *root, mem_chunk *chunk_ptr)
 					return root;
 				}
 
-				new_node = new_node->right;
+				return NULL;
 			}
 
 			else if(*chunk_ptr->size < new_node->chunk_size - DEVIATION)
@@ -49,6 +49,8 @@ rbtree *add_chunk(rbtree *root, mem_chunk *chunk_ptr)
 
 				return root;
 			}
+
+			return NULL;
 		}
 	}
 
