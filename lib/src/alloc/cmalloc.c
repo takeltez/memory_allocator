@@ -71,7 +71,7 @@ void cmalloc(size_t size, void *ptr)
 
 	if (tree == NULL)
 	{
-		printf("Not enough space\n"); 
+		*(size_t *)ptr = NULL;
 
 		return;
 	}
