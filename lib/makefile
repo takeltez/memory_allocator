@@ -1,12 +1,12 @@
-cmalloc := bin/cmalloc
-dlib := dlib/libmalloc.so
+alloc := bin/alloc
+dlib := dlib/liballoc.so
 CC := gcc
 CFLAGS := -Wall
 
-all: $(cmalloc) $(dlib)
+all: $(alloc) $(dlib)
 
-$(cmalloc): build/main.o build/cmalloc.o build/cfree.o build/chunk_handler.o build/logger.o build/rbtree.o
-		$(CC) $(CFLAGS) build/main.o build/cmalloc.o build/cfree.o build/chunk_handler.o build/logger.o build/rbtree.o -o $(cmalloc)
+$(alloc): build/main.o build/cmalloc.o build/cfree.o build/chunk_handler.o build/logger.o build/rbtree.o
+		$(CC) $(CFLAGS) build/main.o build/cmalloc.o build/cfree.o build/chunk_handler.o build/logger.o build/rbtree.o -o $(alloc)
 
 $(dlib): build/cmalloc.o build/cfree.o build/chunk_handler.o build/rbtree.o
 		$(CC) $(CFLAGS) -shared build/cmalloc.o build/cfree.o build/chunk_handler.o build/rbtree.o -o $(dlib)

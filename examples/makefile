@@ -1,15 +1,15 @@
-prog := bin/prog
+time_measuring := bin/time_measuring
 CC := gcc
 CFLAGS := -Wall
 
-all: $(prog)
+all: $(time_measuring)
 
-$(prog): build/prog.o 
-		$(CC) $(CFLAGS) build/prog.o -ldl -o $(prog)
+$(time_measuring): build/time_measuring.o 
+		$(CC) $(CFLAGS) build/time_measuring.o -ldl -o $(time_measuring)
 
 
-build/prog.o: src/prog.c
-		$(CC) $(CFLAGS) -c src/prog.c -o build/prog.o
+build/time_measuring.o: src/time_measuring.c
+		$(CC) $(CFLAGS) -c src/time_measuring.c -o build/time_measuring.o
 
 dir:
 	@mkdir bin

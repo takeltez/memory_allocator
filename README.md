@@ -3,7 +3,7 @@
 ## description
  Memory allocator for GNU/Linux based on C
  
- Run allocator for appeal internal test function with allocated memory state demonstration
+ Run allocator for appeal internal test function with allocated memory state demonstration  
  Run time measuring program for time comparasion between this allocator and standart malloc/free functions
 
 ## compilation
@@ -24,5 +24,5 @@
     ./bin/alloc - run allocator
  ### time measuring program
    #### from examples dir
-   ./bin/time_expr - run time measuring program
+   ./bin/time_measuring - run time measuring program
    

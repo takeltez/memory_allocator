@@ -7,7 +7,7 @@
 
 int main(int argc, char const **argv)
 {
-	void *handle = dlopen("../lib/dlib/libmalloc.so", RTLD_LAZY);
+	void *handle = dlopen("../lib/dlib/liballoc.so", RTLD_LAZY);
 
 	void (*cmalloc)(size_t size, void *ptr) = dlsym(handle, "cmalloc");
 	void (*cfree)(void *ptr) = dlsym(handle, "cfree");
