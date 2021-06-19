@@ -2,7 +2,8 @@
 #include <dlfcn.h>
 #include <stdlib.h>
 #include <inttypes.h>
-#include <time.h> 
+#include <assert.h>
+#include <time.h>
 
 int main(int argc, char const **argv)
 {
@@ -10,6 +11,8 @@ int main(int argc, char const **argv)
 
 	void (*cmalloc)(size_t size, void *ptr) = dlsym(handle, "cmalloc");
 	void (*cfree)(void *ptr) = dlsym(handle, "cfree");
+
+	assert(argc > 1);
 
 	int n = atoi(argv[1]);
 

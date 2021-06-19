@@ -23,7 +23,7 @@ void cmalloc(size_t size, void *ptr)
 
 	if(free_space < size)
 	{	
-		service_seg_ptr = sbrk(size);
+		left_memory_ptr = sbrk(size);
 		
 		free_space = size;
 	}
