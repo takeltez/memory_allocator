@@ -24,5 +24,5 @@
     ./bin/alloc - run allocator
  ### time measuring program
    #### from examples dir
-   ./bin/time_measuring - run time measuring program
+    ./bin/time_measuring - run time measuring program
    
