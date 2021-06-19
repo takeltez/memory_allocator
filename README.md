@@ -1,7 +1,7 @@
 # Memory allocator
 
 ## description
- Memory allocator for GNU/Linux based on C
+ Memory allocator for GNU/Linux applications which are based on C
  
  Run **allocator** for appeal internal test function with allocated memory state demonstration  
  Run **time measuring program** for time comparasion between this allocator and standart malloc/free functions
