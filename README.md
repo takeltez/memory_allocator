@@ -6,7 +6,7 @@
  Run **allocator** for appeal internal test function with allocated memory state demonstration  
  Run **time measuring program** for time comparasion between this allocator and standart malloc/free functions
 
-Compiling **allocator** before running any program from **examples** dir is necessary!
+ Compiling **allocator** before running any program from **examples** dir is necessary!
 
 ## compilation
   ### allocator
