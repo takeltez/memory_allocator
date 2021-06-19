@@ -3,8 +3,8 @@
 ## description
  Memory allocator for GNU/Linux based on C
  
- Run allocator for appeal internal test function with allocated memory state demonstration  
- Run time measuring program for time comparasion between this allocator and standart malloc/free functions
+ Run **allocator** for appeal internal test function with allocated memory state demonstration  
+ Run **time measuring program** for time comparasion between this allocator and standart malloc/free functions
 
 ## compilation
   ### allocator
