@@ -3,10 +3,13 @@
 ## description
  Memory allocator for GNU/Linux applications which are based on C
  
+ **lib** - directory with **allocator** building files  
+ **examples** - directory with users program for **allocator** testing 
+ 
+  Compiling **allocator** before running any program from **examples** directory is necessary!
+ 
  Run **allocator** for appeal internal test function with allocated memory state demonstration  
  Run **time measuring program** for time comparasion between this allocator and standart malloc/free functions
-
- Compiling **allocator** before running any program from **examples** directory is necessary!
 
 ## compilation
   ### allocator
