@@ -3,7 +3,7 @@
 ## description
  Memory allocator for GNU/Linux applications which are based on C
  
- **lib** - directory with **allocator** building files  
+ **lib** - directory with **allocator** sources files  
  **examples** - directory with user programs for **allocator** testing 
  
   Compiling **allocator** before running any programs from **examples** directory is necessary!
